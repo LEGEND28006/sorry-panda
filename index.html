@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
+            background-color: #06192a;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -23,7 +23,7 @@
 
         h1 {
             font-size: 2em;
-            color: #333;
+            color: #feebda;
         }
 
         .btn {
@@ -32,31 +32,35 @@
             cursor: pointer;
             border: none;
             border-radius: 10px;
-            background-color: #4caf50;
-            color: white;
+            background-color: #225f5f;
+            color: #feebda;
             margin: 20px;
             transition: background-color 0.3s;
         }
 
         .btn:hover {
-            background-color: #45a049;
+            background-color: #218f7a;
         }
 
         #noBtn {
-            background-color: #f44336;
+            background-color: #800020; 
+        }
+
+        #noBtn:hover {
+            background-color: #b5002d; 
         }
 
         .thank-you {
             display: none;
             font-size: 2em;
-            color: #4caf50;
+            color: #feebda;
             opacity: 0;
             transition: opacity 1s ease-in-out;
         }
 
         .please-text {
-            font-size: 1.2em;
-            color: black;
+            font-size: 1.5em;
+            color: rgb(255, 195, 216);
             position: fixed;
             bottom: 20px;
             left: 50%;
@@ -65,7 +69,7 @@
         }
 
         img {
-            max-width: 80%;
+            max-width: 50%;
             height: auto;
             border-radius: 10px;
             margin-bottom: 20px;
@@ -76,18 +80,18 @@
 
 <div class="container" id="container">
     <!-- Image section -->
-    <img src="images/panda1.jpg" alt="Sad Panda Image">
-    <h1 id="question">Did you forgive me or not?</h1>
+    <img id="caseImage" src="https://i.postimg.cc/JzDvV1qc/4.jpg" alt="Apology Image" />
+    <h1 id="question">please forgive me 🙏🙏🙏?</h1>
     <button class="btn" id="yesBtn" onclick="handleAnswer('yes')">Yes</button>
-    <button id="noBtn" class="btn" onclick="handleAnswer('no')" onmouseover="addPleaseMessage()">No</button>
+    <button id="noBtn" class="btn" onclick="handleNoClick()" onmouseover="handleMouseOver()">No</button>
 </div>
 
 <div class="thank-you" id="thankYouMessage">
-    Thank you for forgiving me!
+    Thank you for forgiving me!, I knew you🐼 are the best 😉
 </div>
 
 <div id="pleaseText" class="please-text">
-    Sorry na maaf kri de ne, please
+    Sorry na maaf kri de ne panda , please
 </div>
 
 <script>
@@ -96,12 +100,22 @@
     function handleAnswer(answer) {
         if (answer === 'yes') {
             showThankYou();
-        } else if (answer === 'no') {
-            if (currentPage === 4) {
-                goToNextPage();
-            } else {
-                goToNextPage();
-            }
+        }
+    }
+
+    function handleNoClick() {
+        if (currentPage === 4) {
+            teleportNoButton(); // Teleport button on click in case 4
+            addPleaseMessage();
+        } else {
+            goToNextPage();
+        }
+    }
+
+    function handleMouseOver() {
+        if (currentPage === 4) {
+            teleportNoButton(); // Teleport button on hover in case 4
+            addPleaseMessage();
         }
     }
 
@@ -109,28 +123,29 @@
         document.getElementById('container').style.display = 'none';
         const thankYouMessage = document.getElementById('thankYouMessage');
         thankYouMessage.style.display = 'block';
-        
-        // Hide the "please" text when "Yes" is pressed
-        document.getElementById('pleaseText').style.display = 'none';
-        
         setTimeout(() => {
             thankYouMessage.style.opacity = 1;
         }, 100);
+        document.getElementById('pleaseText').style.display = 'none'; // Hide the "please" text
     }
 
     function goToNextPage() {
         const questionElement = document.getElementById('question');
+        const imageElement = document.getElementById('caseImage');
         currentPage++;
 
         switch (currentPage) {
             case 2:
-                questionElement.textContent = "Page 2: Are you still upset?";
+                questionElement.textContent = "bs kinderjoy lai apis 🍫🍫🍫";
+                imageElement.src = "https://i.postimg.cc/zD2xJs3d/3.jpg"; // Image for case 2
                 break;
             case 3:
-                questionElement.textContent = "Page 3: Do you need more time?";
+                questionElement.textContent = "sorryyyyyyy neee yrr panda 🤧🥺";
+                imageElement.src = "https://i.postimg.cc/0yRdjPvC/1.png"; // Image for case 3
                 break;
             case 4:
-                questionElement.textContent = "This is the last page. Do you forgive me now?";
+                questionElement.textContent = "pandaaaaa pleaseeeee 🐼🐼🐼🐼";
+                imageElement.src = "https://i.postimg.cc/c42r0vFC/panda1.webp"; // Image for case 4
                 document.getElementById('noBtn').textContent = "no";
                 document.getElementById('pleaseText').style.display = 'block'; // Show the "please" text
                 break;
@@ -139,29 +154,19 @@
         }
     }
 
-    function restartProcess() {
-        currentPage = 1;
-        document.getElementById('question').textContent = "Did you forgive me or not?";
-        document.getElementById('noBtn').textContent = "No";
-        document.getElementById('pleaseText').style.display = 'none'; // Hide the "please" text
-    }
-
-    function moveNoButton() {
-        if (currentPage === 4) {
-            const noBtn = document.getElementById('noBtn');
-            const randomX = Math.floor(Math.random() * (window.innerWidth - noBtn.offsetWidth));
-            const randomY = Math.floor(Math.random() * (window.innerHeight - noBtn.offsetHeight));
-            noBtn.style.position = 'absolute';
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
-        }
+    function teleportNoButton() {
+        const noBtn = document.getElementById('noBtn');
+        const randomX = Math.floor(Math.random() * (window.innerWidth - noBtn.offsetWidth));
+        const randomY = Math.floor(Math.random() * (window.innerHeight - noBtn.offsetHeight));
+        noBtn.style.position = 'absolute';
+        noBtn.style.left = randomX + 'px';
+        noBtn.style.top = randomY + 'px';
     }
 
     function addPleaseMessage() {
         if (currentPage === 4) {
             const pleaseTextElement = document.getElementById('pleaseText');
-            pleaseTextElement.textContent += 'please ';
-            moveNoButton(); // Move the "No" button to a random location when hovering on it
+            pleaseTextElement.textContent += ' please'; // Add "please" every time
         }
     }
 </script>
